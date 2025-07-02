@@ -1,8 +1,11 @@
 // src/app/api/stocks/search/route.ts
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import { NextRequest } from "next/server";
 import yahooFinance from "yahoo-finance2";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("q");
