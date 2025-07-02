@@ -1,5 +1,8 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { usePortfolioStore } from "@/store/portfolio";
