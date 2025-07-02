@@ -1,5 +1,8 @@
 // src/app/api/stocks/timeseries/route.ts
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+
 import yahooFinance from "yahoo-finance2";
 import { NextRequest } from "next/server";
 
