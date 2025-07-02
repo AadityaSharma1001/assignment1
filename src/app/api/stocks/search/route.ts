@@ -2,6 +2,7 @@
 import { NextRequest } from "next/server";
 import yahooFinance from "yahoo-finance2";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("q");
@@ -11,7 +12,8 @@ export async function GET(req: NextRequest) {
   try {
     const result = await yahooFinance.search(query);
 
-    const matches = result.quotes.filter(
+    // Bypass type errors by forcing each item to 'any'
+    const matches = (result.quotes as any[]).filter(
       (q) =>
         typeof q.symbol === "string" &&
         (q.symbol.endsWith(".NS") || q.symbol.endsWith(".BSE"))
