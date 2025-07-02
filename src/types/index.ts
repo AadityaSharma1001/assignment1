@@ -27,3 +27,9 @@ export type MentionChartData = {
   stock: string;
   mentions: number;
 };
+
+export type RSSItem = {
+  title: [string];
+  link: [string];
+  pubDate: [string];
+};

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 import * as xml2js from "xml2js";
 import stringSimilarity from "string-similarity";
-import { NewsItem } from "@/types";
+import { NewsItem, RSSItem } from "@/types";
 
 async function fetchETMarketsNews(): Promise<NewsItem[]> {
   const res = await fetch("https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms");
@@ -11,7 +11,7 @@ async function fetchETMarketsNews(): Promise<NewsItem[]> {
   const parsed = await xml2js.parseStringPromise(xml);
   const items = parsed.rss.channel[0].item || [];
 
-  const news: NewsItem[] = items.slice(0, 10).map((item: any) => ({
+  const news: NewsItem[] = items.slice(0, 10).map((item: RSSItem) => ({
     title: item.title[0],
     url: item.link[0],
     source: "ETMarkets",
