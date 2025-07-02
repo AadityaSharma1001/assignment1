@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export async function getUserStocks(): Promise<string[]> {
   const res = await fetch("/api/portfolio", { method: "GET" });
