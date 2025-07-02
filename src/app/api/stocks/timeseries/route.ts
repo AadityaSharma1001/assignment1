@@ -1,4 +1,6 @@
-import yahooFinance, { HistoricalResult } from "yahoo-finance2";
+// src/app/api/stocks/timeseries/route.ts
+
+import yahooFinance from "yahoo-finance2";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -15,14 +17,13 @@ export async function GET(req: NextRequest) {
     symbol = `${symbol}.NS`;
   }
 
-  const safeStart: string =
-    start ??
-    new Date(new Date().setMonth(new Date().getMonth() - 1))
-      .toISOString()
-      .split("T")[0];
+  // ✅ Safe fallback for start date
+  const safeStart: string = start ?? new Date(new Date().setMonth(new Date().getMonth() - 1))
+    .toISOString()
+    .split("T")[0]; // fallback = 1M ago
 
   try {
-    const result: HistoricalResult = await yahooFinance.historical(symbol, {
+    const result = await yahooFinance.historical(symbol, {
       period1: safeStart,
       interval: "1d",
     });
@@ -31,8 +32,9 @@ export async function GET(req: NextRequest) {
       return new Response("No historical data found", { status: 404 });
     }
 
-    const formatted: Record<string, HistoricalResult[number]> = {};
-    result.forEach((entry: HistoricalResult[number]) => {
+    // Convert array to object with date keys
+    const formatted: Record<string, any> = {};
+    result.forEach((entry) => {
       const date = new Date(entry.date).toISOString().split("T")[0];
       formatted[date] = entry;
     });
